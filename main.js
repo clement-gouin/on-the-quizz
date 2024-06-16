@@ -86,7 +86,7 @@ let app = {
     },
     readZData(str) {
       this.debugData = str;
-      const parts = str.split("\n");
+      const parts = str.trim().split("\n");
       if (parts.length < 3) {
         return true;
       }
