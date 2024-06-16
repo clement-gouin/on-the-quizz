@@ -23,7 +23,7 @@ let app = {
         (q) =>
           q.expected == null ||
           (q.answers.length === 1 &&
-            self.normalize(q.expected).includes(self.normalize(q.value))) ||
+            self.normalize(q.value).includes(self.normalize(q.expected))) ||
           q.value === q.expected
       );
     },
