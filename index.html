@@ -28,6 +28,7 @@
         <template v-for="question, i in questions">
           <label :for="`input-${i}`" v-html="question.label"></label><br />
           <input
+            type="text"
             v-if="question.answers.length == 1"
             v-model.lazy="question.value"
             :id="`input-${i}`"
