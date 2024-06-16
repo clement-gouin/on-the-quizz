@@ -2,64 +2,79 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- TODO: 1. rename app -->
-    <title>Z-App</title>
+    <title>On The Quizz</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="material-colors.css" />
-    <script src="https://unpkg.com/lz-string@1.5"></script>
-    <script src="https://unpkg.com/lucide@0"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
-        }
-      }
-    </script>
-    <script type="module" src="main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/lz-string@1.5/libs/lz-string.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
     <main id="app" style="display: none">
-      <div v-if="debug">
-        <!-- TODO: 1. rename app -->
-        <h1><i icon="cog"></i> Z-App</h1>
-        <div class="editor">
-          <textarea
-            class="numbers"
-            :cols="editor.numbersCols"
-            rows="10"
-            readonly
-            ref="numbers"
-            v-model="editor.numbersText"
-          ></textarea>
-          <textarea
-            class="code"
-            v-model="debugData"
-            ref="code"
-            rows="10"
-            @scroll="editorScroll"
-          ></textarea>
-          <div class="overlay">
-            <textarea :cols="editor.numbersCols" rows="10" readonly></textarea>
-            <textarea
-              ref="overlay"
-              class="code"
-              rows="10"
-              readonly
-              v-model="editor.overlayText"
-            ></textarea>
-          </div>
-        </div>
-        <a v-if="debugUrl" :href="debugUrl" target="_blank"
-          ><i icon="link"></i> Output link</a
-        >
+      <template v-if="debug">
+        <h1>On The Quizz</h1>
+        <textarea v-model="debugData" rows="15"></textarea>
+        <br />
+        <br />
+        <a v-if="debugData.length" :href="debugUrl" target="_blank">Link</a>
         <br />
         <br />
         <hr />
-      </div>
-      <!-- TODO: 5. implement custom logic -->
-      <div class="header" v-html="parsed.header"></div>
-      <div v-for="(d, i) in parsed.data" :key="`data-${i}`" v-html="d"></div>
+      </template>
+      <h1 v-html="title + ' (preview)'"></h1>
+      <form @submit.prevent="submit">
+        <template v-for="question, i in questions">
+          <label :for="`input-${i}`" v-html="question.label"></label><br />
+          <input
+            v-if="question.answers.length == 1"
+            v-model.lazy="question.value"
+            :id="`input-${i}`"
+            :name="`input-${i}`"
+            :disabled="readonly"
+            required
+          />
+          <template
+            v-if="question.answers.length > 1 && question.answers.length <= 4"
+            v-for="answer, j in question.answers"
+          >
+            <input
+              type="radio"
+              v-model="question.value"
+              :id="`input-${i}-${j}`"
+              :name="`input-${i}`"
+              :value="answer"
+              :disabled="readonly"
+              required
+            />
+            &nbsp;
+            <label :for="`input-${i}-${j}`">{{ answer }}</label><br />
+          </template>
+          <select
+            v-if="question.answers.length > 4"
+            v-model="question.value"
+            :id="`input-${i}`"
+            :name="`input-${i}`"
+            :disabled="readonly"
+            required
+          >
+            <option v-for="answer in question.answers" :value="answer">
+              {{ answer }}
+            </option>
+          </select>
+          <br />
+          <br
+            v-if="question.answers.length == 1 || question.answers.length > 4"
+          />
+        </template>
+        <input type="submit" value="Submit" :disabled="readonly || debug" />
+      </form>
+      <template v-if="readonly || debug">
+        <h2 class="success" v-if="debug || success" v-html="successText"></h2>
+        <template v-if="debug || !success">
+          <h2 class="failure" v-html="failureText"></h2>
+          <button v-if="!debug" @click="retry">Retry</button>
+        </template>
+      </template>
     </main>
   </body>
 </html>

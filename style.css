@@ -80,17 +80,12 @@ CUSTOM STYLE
 ================================================= 
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
 :root {
   /* https://materialui.co/colors/ */
-  /* TODO: 2. change hue and saturation */
-  --hue-primary: 0;
-  --sat-primary: 0%;
-  --background: hsl(var(--hue-primary), var(--sat-primary), 96%);
-  --background-primary: hsl(var(--hue-primary), var(--sat-primary), 93%);
-  --background-secondary: hsl(var(--hue-primary), var(--sat-primary), 90%);
+  --hue-primary: 14.3;
+  --sat-primary: 18.3%;
+  --background: hsl(var(--hue-primary), var(--sat-primary), 96.08%);
+  --background-primary: hsl(var(--hue-primary), var(--sat-primary), 93.33%);
   --color-primary: hsl(var(--hue-primary), var(--sat-primary), 50%);
   --text-primary: hsl(var(--hue-primary), var(--sat-primary), 25%);
   --text-secondary: hsl(var(--hue-primary), var(--sat-primary), 30%);
@@ -104,12 +99,16 @@ https://gist.github.com/JoeyBurzynski/617fb6201335779f8424ad9528b72c41
 ================================================= 
 */
 
+* {
+  box-sizing: border-box;
+  font-family: Verdana, serif;
+  color: var(--text-primary);
+}
+
 html,
 body {
   padding: 0;
   max-width: 100%;
-  color: var(--text-primary);
-  font-family: "Roboto", Verdana, serif;
 }
 
 body {
@@ -123,10 +122,23 @@ main {
   min-height: 100%;
 }
 
+h1 {
+  margin-bottom: 0.5em;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
   font-size: 0.9em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.5em 0 0.5em;
 }
 
 p,
@@ -134,17 +146,7 @@ ul,
 ol {
   margin-bottom: 2em;
   color: var(--text-secondary);
-}
-
-textarea,
-input,
-select,
-.mono {
-  font-family: "Roboto Mono", monospace;
-}
-
-a {
-  color: inherit;
+  font-family: sans-serif;
 }
 
 @media only screen and (min-width: 768px) {
@@ -156,84 +158,15 @@ a {
   }
 }
 
-/* 
-=================================================
-APP STYLE
-================================================= 
-*/
-
-.header {
-  margin: 2em 0 1rem;
-}
-
-.button {
-  display: block;
+textarea {
+  font-family: monospace;
   width: 100%;
-  text-decoration: none;
-  padding: 1em;
-  margin-bottom: 0.75em;
-  border: 1px solid var(--color-primary);
-  border-radius: 0.5em;
-  background-color: var(--background);
-  cursor: pointer;
-  font-size: 1.333em;
 }
 
-.button:hover {
-  background-color: var(--background-secondary);
+.success {
+  color: #2e7d32;
 }
 
-svg.lucide {
-  display: inline-block;
-  vertical-align: text-top;
-}
-
-b .lucide,
-h1 .lucide,
-h2 .lucide,
-h3 .lucide,
-h4 .lucide,
-h5 .lucide,
-h6 .lucide {
-  stroke-width: 3;
-}
-
-.editor {
-  display: flex;
-  overflow-y: scroll;
-  position: relative;
-}
-
-.editor textarea {
-  margin: 0;
-  resize: none;
-  outline: none;
-  font-size: 13px;
-  text-wrap: nowrap;
-}
-
-.code {
-  flex-grow: 1;
-}
-
-.numbers {
-  overflow: hidden;
-  border: 1px solid #0000;
-  background: none;
-  text-align: right;
-  pointer-events: none;
-}
-
-.overlay {
-  display: flex;
-  position: absolute;
-  width: 100%;
-  opacity: 50%;
-  pointer-events: none;
-}
-
-.overlay > textarea {
-  border: 1px solid #0000;
-  overflow: hidden;
-  background: none;
+.failure {
+  color: #c62828;
 }
