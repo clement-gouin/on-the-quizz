@@ -124,9 +124,11 @@ let app = {
       }
     },
   },
+  beforeMount: function () {
+    this.initApp();
+  },
   mounted: function () {
     console.log("app mounted");
-    this.initApp();
     setTimeout(this.showApp);
   },
 };
