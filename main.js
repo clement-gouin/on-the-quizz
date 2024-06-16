@@ -1,0 +1,137 @@
+/* exported app */
+
+let app = {
+  data() {
+    return {
+      debug: true,
+      debugData:
+        "My Quizz\nSUCCESS\nFAILURE\n0\nThis is a label\n1\nThis a text input (answer: answer)\nanswer\n2\nThis is a multi-choice input\nright\nwrong",
+      readonly: false,
+      title: "",
+      successText: "",
+      failureText: "",
+      questions: [],
+    };
+  },
+  computed: {
+    debugUrl() {
+      return window.location.pathname + "?z=" + this.encodeData(this.debugData);
+    },
+    success() {
+      const self = this;
+      return this.questions.every(
+        (q) =>
+          q.expected == null ||
+          (q.answers.length === 1 &&
+            self.normalize(q.expected).includes(self.normalize(q.value))) ||
+          q.value === q.expected
+      );
+    },
+  },
+  watch: {
+    debugData(value) {
+      this.readZData(value);
+    },
+  },
+  methods: {
+    showApp() {
+      document.getElementById("app").setAttribute("style", "");
+    },
+    submit() {
+      this.readonly = true;
+    },
+    retry() {
+      this.readonly = false;
+      this.questions.forEach((question) => {
+        question.value = "";
+      });
+    },
+    base64URLTobase64(str) {
+      const base64Encoded = str.replace(/-/g, "+").replace(/_/g, "/");
+      const padding =
+        str.length % 4 === 0 ? "" : "=".repeat(4 - (str.length % 4));
+      return base64Encoded + padding;
+    },
+    base64tobase64URL(str) {
+      return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    },
+    decodeData(str) {
+      return LZString.decompressFromBase64(
+        this.base64URLTobase64(str.split("").reverse().join(""))
+      );
+    },
+    encodeData(str) {
+      return this.base64tobase64URL(LZString.compressToBase64(str))
+        .split("")
+        .reverse()
+        .join("");
+    },
+    shuffle(array) {
+      let currentIndex = array.length;
+      while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+    },
+    normalize(str) {
+      return str
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    },
+    readZData(str) {
+      this.debugData = str;
+      const parts = str.split("\n");
+      if (parts.length < 3) {
+        return true;
+      }
+      this.title = parts.shift();
+      this.successText = parts.shift();
+      this.failureText = parts.shift();
+      this.questions = [];
+      while (parts.length) {
+        let size = parseInt(parts.shift());
+        let currentQuestion = {
+          label: parts.shift(),
+          answers: [],
+          expected: null,
+          value: "",
+        };
+        while (parts.length && size) {
+          currentQuestion.answers.push(parts.shift());
+          size--;
+        }
+        if (currentQuestion.answers.length) {
+          currentQuestion.expected = currentQuestion.answers[0];
+        }
+        this.shuffle(currentQuestion.answers);
+        this.questions.push(currentQuestion);
+      }
+      return false;
+    },
+    initApp() {
+      const url = new URL(window.location);
+      if (url.searchParams.get("z") !== null) {
+        this.debug = this.readZData(this.decodeData(url.searchParams.get("z")));
+      }
+      if (this.debug) {
+        this.readZData(this.debugData);
+      }
+    },
+  },
+  mounted: function () {
+    console.log("app mounted");
+    this.initApp();
+    setTimeout(this.showApp);
+  },
+};
+
+window.onload = () => {
+  app = Vue.createApp(app);
+  app.mount("#app");
+};
