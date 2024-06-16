@@ -96,7 +96,7 @@ let app = {
       this.questions = [];
       while (parts.length) {
         let size = parseInt(parts.shift());
-        let currentQuestion = {
+        const currentQuestion = {
           label: parts.shift(),
           answers: [],
           expected: null,

@@ -158,7 +158,9 @@ ol {
   }
 }
 
-textarea {
+textarea,
+input[type="text"],
+select {
   font-family: monospace;
   width: 100%;
 }
