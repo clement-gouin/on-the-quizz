@@ -32,10 +32,10 @@ Depending on the number of choices:
 
 ```txt
 My Quizz
-SUCCESS
-FAILURE
+Have a <a href='https://orteil.dashnet.org/cookieclicker/'>cookie</a> !
+Try again !
 0
-This is just a label
+This is just a <b>label</b>
 1
 This a text input (answer: answer)
 answer
