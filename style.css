@@ -101,14 +101,14 @@ https://gist.github.com/JoeyBurzynski/617fb6201335779f8424ad9528b72c41
 
 * {
   box-sizing: border-box;
-  font-family: Verdana, serif;
-  color: var(--text-primary);
 }
 
 html,
 body {
   padding: 0;
   max-width: 100%;
+  color: var(--text-primary);
+  font-family: Verdana, serif;
 }
 
 body {
@@ -163,6 +163,10 @@ input[type="text"],
 select {
   font-family: monospace;
   width: 100%;
+}
+
+a {
+  color: inherit;
 }
 
 .success {
