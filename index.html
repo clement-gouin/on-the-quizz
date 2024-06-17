@@ -50,7 +50,7 @@
               required
             />
             &nbsp;
-            <label :for="`input-${i}-${j}`">{{ answer }}</label><br />
+            <label :for="`input-${i}-${j}`" v-html="answer"></label><br />
           </template>
           <select
             v-if="question.answers.length > 4"
@@ -60,9 +60,11 @@
             :disabled="readonly"
             required
           >
-            <option v-for="answer in question.answers" :value="answer">
-              {{ answer }}
-            </option>
+            <option
+              v-for="answer in question.answers"
+              :value="answer"
+              v-html="answer"
+            ></option>
           </select>
           <br />
           <br
