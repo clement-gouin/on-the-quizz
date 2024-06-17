@@ -95,6 +95,10 @@ let app = {
       this.failureText = parts.shift();
       this.questions = [];
       while (parts.length) {
+        if (!/^\d+$/.test(parts[0])) {
+          parts.shift();
+          continue;
+        }
         let size = parseInt(parts.shift());
         const currentQuestion = {
           label: parts.shift(),
