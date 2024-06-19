@@ -173,6 +173,11 @@ APP STYLE
 ================================================= 
 */
 
+input[type="text"],
+select {
+  width: 100%;
+}
+
 .success {
   color: #2e7d32;
 }
