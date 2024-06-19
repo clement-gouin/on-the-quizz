@@ -86,6 +86,7 @@ CUSTOM STYLE
   --sat-primary: 15%;
   --background: hsl(var(--hue-primary), var(--sat-primary), 96%);
   --background-primary: hsl(var(--hue-primary), var(--sat-primary), 93%);
+  --background-secondary: hsl(var(--hue-primary), var(--sat-primary), 90%);
   --color-primary: hsl(var(--hue-primary), var(--sat-primary), 50%);
   --text-primary: hsl(var(--hue-primary), var(--sat-primary), 25%);
   --text-secondary: hsl(var(--hue-primary), var(--sat-primary), 30%);
@@ -138,7 +139,6 @@ ul,
 ol {
   margin-bottom: 2em;
   color: var(--text-secondary);
-  font-family: sans-serif;
 }
 
 textarea,
