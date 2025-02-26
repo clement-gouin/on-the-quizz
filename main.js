@@ -7,7 +7,7 @@ let app = {
       debugData:
         "My Quizz\nHave a <a href='https://orteil.dashnet.org/cookieclicker/'>cookie</a> !\nTry again !\n0\nThis is a <b>label</b>\n1\nThis a text input (answer: answer)\nanswer\n2\nThis is a multi-choice input\nright\nwrong",
       readonly: false,
-      title: "",
+      header: "",
       successText: "",
       failureText: "",
       questions: [],
@@ -90,7 +90,10 @@ let app = {
       if (parts.length < 3) {
         return true;
       }
-      this.title = parts.shift();
+      this.header = parts.shift();
+      if (!/<[^>]*>/.test(this.header)) {
+        this.header = `<h1>${this.header}</h1>`;
+      }
       this.successText = parts.shift();
       this.failureText = parts.shift();
       this.questions = [];
