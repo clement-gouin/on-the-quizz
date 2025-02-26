@@ -45,3 +45,7 @@ right
 wrong
 ```
 
+## Tips
+
+* [Material design colors](https://materialui.co/colors/) are available, you can use `class="red-500"` on your HTML
+* [FontAwesome icons](https://fontawesome.com/search?ic=free) are available, you can use `<i class="fas fa-house"></i>` on your HTML
