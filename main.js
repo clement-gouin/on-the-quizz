@@ -95,7 +95,13 @@ let app = {
         this.header = `<h1>${this.header}</h1>`;
       }
       this.successText = parts.shift();
+      if (!/<[^>]*>/.test(this.successText)) {
+        this.successText = `<h2>${this.successText}</h2>`;
+      }
       this.failureText = parts.shift();
+      if (!/<[^>]*>/.test(this.failureText)) {
+        this.failureText = `<h2>${this.failureText}</h2>`;
+      }
       this.questions = [];
       while (parts.length) {
         if (!/^\d+$/.test(parts[0])) {

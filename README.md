@@ -9,9 +9,9 @@ Format is made line by line
 
 Header (3 lines):
 ```txt
-1   Quizz name (html)
-2   Correct answer (html)
-3   Incorrect answer (html)
+1   Quizz name (html, <h1> on plain text)
+2   Correct answer (html, <h2> on plain text)
+3   Incorrect answer (html, <h2> on plain text)
 ```
 
 After that each question is defined as follows:
@@ -32,7 +32,7 @@ Depending on the number of choices:
 
 ```txt
 My Quizz
-Have a <a href='https://orteil.dashnet.org/cookieclicker/'>cookie</a> !
+<h2>Have a <a href='https://orteil.dashnet.org/cookieclicker/'>cookie</a> !</h2>
 Try again !
 0
 This is just a <b>label</b>

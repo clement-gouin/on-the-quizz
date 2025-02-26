@@ -79,9 +79,13 @@
         <input type="submit" value="Submit" :disabled="readonly || debug" />
       </form>
       <template v-if="readonly || debug">
-        <h2 class="green-800" v-if="debug || success" v-html="successText"></h2>
+        <div
+          class="green-800"
+          v-if="debug || success"
+          v-html="successText"
+        ></div>
         <template v-if="debug || !success">
-          <h2 class="red-800" v-html="failureText"></h2>
+          <div class="red-800" v-html="failureText"></div>
           <button v-if="!debug" @click="retry">Retry</button>
         </template>
       </template>
