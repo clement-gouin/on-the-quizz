@@ -27,8 +27,7 @@
         <br />
         <hr />
       </div>
-      <div v-html="header"></div>
-      <br />
+      <div class="header" v-html="header"></div>
       <form @submit.prevent="submit">
         <template v-for="question, i in questions">
           <label :for="`input-${i}`" v-html="question.label"></label><br />
