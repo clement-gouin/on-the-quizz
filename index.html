@@ -27,7 +27,8 @@
         <br />
         <hr />
       </div>
-      <h1 v-html="title + (debug ? ' (preview)' : '')"></h1>
+      <div v-html="header"></div>
+      <br />
       <form @submit.prevent="submit">
         <template v-for="question, i in questions">
           <label :for="`input-${i}`" v-html="question.label"></label><br />
