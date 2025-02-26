@@ -173,6 +173,10 @@ APP STYLE
 ================================================= 
 */
 
+.header {
+  margin: 2em 0 1rem;
+}
+
 input[type="radio"],
 label,
 button,
