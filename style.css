@@ -173,7 +173,33 @@ APP STYLE
 ================================================= 
 */
 
+input[type="radio"],
+label,
+button,
+input[type="submit"],
+select {
+  cursor: pointer;
+}
+
 input[type="text"],
 select {
   width: 100%;
+}
+
+button,
+input[type="submit"] {
+  width: 100%;
+  display: block;
+  font-family: inherit;
+  text-decoration: none;
+  padding: 1em;
+  margin-bottom: 0.75em;
+  border: 1px solid var(--color-primary);
+  border-radius: 0.5em;
+  background-color: var(--background);
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: var(--background-secondary);
 }
