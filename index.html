@@ -8,6 +8,12 @@
     <script src="https://unpkg.com/lz-string@1.5/libs/lz-string.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v6.7.2/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="material-colors.css" />
   </head>
   <body>
     <main id="app" style="display: none">
@@ -72,9 +78,9 @@
         <input type="submit" value="Submit" :disabled="readonly || debug" />
       </form>
       <template v-if="readonly || debug">
-        <h2 class="success" v-if="debug || success" v-html="successText"></h2>
+        <h2 class="green-800" v-if="debug || success" v-html="successText"></h2>
         <template v-if="debug || !success">
-          <h2 class="failure" v-html="failureText"></h2>
+          <h2 class="red-800" v-html="failureText"></h2>
           <button v-if="!debug" @click="retry">Retry</button>
         </template>
       </template>
