@@ -48,9 +48,11 @@ wrong
 ```
 
 ```txt
-<h1><i icon="notebook-pen"></i> Rick Astley Quizz</h1>
-<h2><i icon="trophy"></i> You know your stuff !</h2>
-<h2><i icon="x"></i> Try again !</h2>
+<h1><i icon=notebook-pen></i> Rick Astley Quizz</h1>
+<h2><i icon=trophy></i> You know your stuff !</h2>
+<h2><i icon=x></i> Try again !</h2>
+<i icon=check></i> Validate my response
+<i icon=rotate-ccw></i> I want to retry
 4
 <big><b><i icon=baby></i></b></big> What year was Rick born?
 1966
