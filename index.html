@@ -4,21 +4,17 @@
     <meta charset="UTF-8" />
     <title>On The Quizz</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/lz-string@1.5/libs/lz-string.min.js"></script>
+    <link rel="stylesheet" href="material-colors.css" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/lz-string@1.5"></script>
+    <script src="https://unpkg.com/lucide@0"></script>
     <script type="text/javascript" src="main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script
-      defer
-      src="https://use.fontawesome.com/releases/v6.7.2/js/all.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="material-colors.css" />
   </head>
   <body>
     <main id="app" style="display: none">
       <div v-if="debug">
-        <h1>On The Quizz</h1>
+        <h1><i icon="notebook-pen"></i> On The Quizz</h1>
         <textarea v-model="debugData" rows="10"></textarea><br />
         <a v-if="debugData.length" :href="debugUrl" target="_blank"
           >Output link</a
@@ -75,7 +71,11 @@
             v-if="question.answers.length == 1 || question.answers.length > 4"
           />
         </template>
-        <input type="submit" value="Submit" :disabled="readonly || debug" />
+        <button
+          type="submit"
+          :disabled="readonly || debug"
+          v-html="submitText"
+        ></button>
       </form>
       <template v-if="readonly || debug">
         <div
@@ -85,7 +85,8 @@
         ></div>
         <template v-if="debug || !success">
           <div class="red-800" v-html="failureText"></div>
-          <button v-if="!debug" @click="retry">Retry</button>
+          <br />
+          <button @click="retry" v-html="retryText"></button>
         </template>
       </template>
     </main>
