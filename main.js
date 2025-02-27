@@ -10,6 +10,8 @@ let app = {
       header: "",
       successText: "",
       failureText: "",
+      submitText: "<i icon='send'></i> Submit",
+      retryText: "<i icon='rotate-ccw'></i> Retry",
       questions: [],
     };
   },
@@ -102,6 +104,12 @@ let app = {
       if (!/<[^>]*>/.test(this.failureText)) {
         this.failureText = `<h2>${this.failureText}</h2>`;
       }
+      if (parts.length && !/^\d+$/.test(parts[0])) {
+        this.submitText = parts.shift();
+      }
+      if (parts.length && !/^\d+$/.test(parts[0])) {
+        this.retryText = parts.shift();
+      }
       this.questions = [];
       while (parts.length) {
         if (!/^\d+$/.test(parts[0])) {
@@ -136,6 +144,15 @@ let app = {
         this.readZData(this.debugData);
       }
     },
+    updateIcons() {
+      lucide.createIcons({
+        nameAttr: "icon",
+        attrs: {
+          width: "1.1em",
+          height: "1.1em",
+        },
+      });
+    },
   },
   beforeMount: function () {
     this.initApp();
@@ -143,6 +160,10 @@ let app = {
   mounted: function () {
     console.log("app mounted");
     setTimeout(this.showApp);
+    this.updateIcons();
+  },
+  updated: function () {
+    this.updateIcons();
   },
 };
 

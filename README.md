@@ -7,11 +7,13 @@
 
 Format is made line by line
 
-Header (3 lines):
+Header (3-5 lines):
 ```txt
 1   Quizz name (html, <h1> on plain text)
 2   Correct answer (html, <h2> on plain text)
 3   Incorrect answer (html, <h2> on plain text)
+4?  Submit button text (html, optional)
+5?  Retry button text (html, optional)
 ```
 
 After that each question is defined as follows:
@@ -28,7 +30,7 @@ Depending on the number of choices:
 * 2-4: a radio input field
 * 5+: a dropdown input field
 
-## Sample
+## Samples
 
 ```txt
 My Quizz
@@ -45,7 +47,31 @@ right
 wrong
 ```
 
+```txt
+<h1><i icon="notebook-pen"></i> Rick Astley Quizz</h1>
+<h2><i icon="trophy"></i> You know your stuff !</h2>
+<h2><i icon="x"></i> Try again !</h2>
+4
+<big><b><i icon=baby></i></b></big> What year was Rick born?
+1966
+1959
+1970
+1964
+4
+<big><b><i icon=mic-vocal></i></b></big> What year was recorded <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Never Gonna Give You Up</a>?
+1987
+1986
+1985
+1988
+4
+<big><b><i icon=youtube></i></b></big> How many views has the clip on YouTube?
+1.600.000
+1.900.000
+2.500.000
+3.300.000
+```
+
 ## Tips
 
 * [Material design colors](https://materialui.co/colors/) are available, you can use `class="red-500"` on your HTML
-* [FontAwesome icons](https://fontawesome.com/search?ic=free) are available, you can use `<i class="fas fa-house"></i>` on your HTML
+* [Lucide icons](https://lucide.dev/icons) are available, you can use `<i icon=house></i>` on your HTML
