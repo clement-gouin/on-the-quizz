@@ -51,14 +51,14 @@ const utils = {
     return str
       .trim()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[\u0300-\u036f]/gu, "")
       .toLowerCase();
   },
   shuffle(array) {
     let currentIndex = array.length;
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       const randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+      currentIndex -= 1;
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex],
         array[currentIndex],
@@ -88,7 +88,7 @@ const app = createApp({
     success() {
       return this.parsed.questions.every(
         (question, index) =>
-          question.expected == null ||
+          question.expected === null ||
           (question.answers.length === 1 &&
             utils
               .normalize(this.answers[index])
@@ -186,43 +186,42 @@ const app = createApp({
         return true;
       }
       this.parsed.header = parts.shift();
-      if (!/<[^>]*>/.test(this.parsed.header)) {
+      if (!/<[^>]*>/u.test(this.parsed.header)) {
         this.parsed.header = `<h1>${this.parsed.header}</h1>`;
       }
       this.parsed.successText = parts.shift();
-      if (!/<[^>]*>/.test(this.parsed.successText)) {
+      if (!/<[^>]*>/u.test(this.parsed.successText)) {
         this.parsed.successText = `<h2>${this.parsed.successText}</h2>`;
       }
       this.parsed.failureText = parts.shift();
-      if (!/<[^>]*>/.test(this.parsed.failureText)) {
+      if (!/<[^>]*>/u.test(this.parsed.failureText)) {
         this.parsed.failureText = `<h2>${this.parsed.failureText}</h2>`;
       }
-      if (parts.length && !/^\d+$/.test(parts[0])) {
+      if (parts.length && !/^\d+$/u.test(parts[0])) {
         this.parsed.submitText = parts.shift();
       }
-      if (parts.length && !/^\d+$/.test(parts[0])) {
+      if (parts.length && !/^\d+$/u.test(parts[0])) {
         this.parsed.retryText = parts.shift();
       }
       while (parts.length) {
-        if (!/^\d+$/.test(parts[0])) {
-          parts.shift();
-          continue;
+        const line = parts.shift();
+        if (/^\d+$/u.test(line)) {
+          let size = parseInt(line, 10);
+          const currentQuestion = {
+            label: parts.shift(),
+            answers: [],
+            expected: null,
+          };
+          while (parts.length && size) {
+            currentQuestion.answers.push(parts.shift());
+            size -= 1;
+          }
+          if (currentQuestion.answers.length) {
+            [currentQuestion.expected] = currentQuestion.answers;
+          }
+          utils.shuffle(currentQuestion.answers);
+          this.parsed.questions.push(currentQuestion);
         }
-        let size = parseInt(parts.shift());
-        const currentQuestion = {
-          label: parts.shift(),
-          answers: [],
-          expected: null,
-        };
-        while (parts.length && size) {
-          currentQuestion.answers.push(parts.shift());
-          size--;
-        }
-        if (currentQuestion.answers.length) {
-          currentQuestion.expected = currentQuestion.answers[0];
-        }
-        utils.shuffle(currentQuestion.answers);
-        this.parsed.questions.push(currentQuestion);
       }
       this.answers = this.parsed.questions.map(() => "");
       return false;
