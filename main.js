@@ -108,7 +108,6 @@ const app = createApp({
     this.initApp();
   },
   mounted() {
-    console.log("app mounted");
     setTimeout(this.showApp);
     this.updateIcons();
   },
@@ -182,7 +181,7 @@ const app = createApp({
       this.debugData = str;
       this.parsed = utils.clone(DEFAULT_VALUES);
       this.answers = [];
-      const parts = str.trim().split("\n");
+      const parts = str.split("\n");
       if (parts.length < 3) {
         return true;
       }
