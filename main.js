@@ -44,6 +44,9 @@ const utils = {
       .reverse()
       .join("");
   },
+  clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  },
   normalize(str) {
     return str
       .trim()
@@ -177,7 +180,7 @@ const app = createApp({
     },
     readZData(str) {
       this.debugData = str;
-      this.parsed = DEFAULT_VALUES;
+      this.parsed = utils.clone(DEFAULT_VALUES);
       this.answers = [];
       const parts = str.trim().split("\n");
       if (parts.length < 3) {
