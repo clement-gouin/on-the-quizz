@@ -1,18 +1,18 @@
 {
-  "name": "z-app",
+  "name": "on-the-quizz",
   "version": "1.0.0",
-  "description": "*Working template for URL encoded app*",
+  "description": "*When you need quizzes on the go !*",
   "scripts": {
     "lint": "eslint",
     "fix": "eslint --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clement-gouin/z-app.git"
+    "url": "git+https://github.com/clement-gouin/on-the-quizz.git"
   },
   "author": "clement-gouin",
   "license": "ISC",
-  "homepage": "https://github.com/clement-gouin/z-app#readme",
+  "homepage": "https://github.com/clement-gouin/on-the-quizz#readme",
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "eslint": "^9.21.0",

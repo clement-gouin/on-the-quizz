@@ -1,6 +1,6 @@
-/* exported app */
+import { createApp } from "vue";
 
-let app = {
+const app = createApp({
   data() {
     return {
       debug: true,
@@ -17,15 +17,14 @@ let app = {
   },
   computed: {
     debugUrl() {
-      return window.location.pathname + "?z=" + this.encodeData(this.debugData);
+      return `${window.location.pathname}?z=${this.encodeData(this.debugData)}`;
     },
     success() {
-      const self = this;
       return this.questions.every(
         (q) =>
           q.expected == null ||
           (q.answers.length === 1 &&
-            self.normalize(q.value).includes(self.normalize(q.expected))) ||
+            this.normalize(q.value).includes(this.normalize(q.expected))) ||
           q.value === q.expected
       );
     },
@@ -34,6 +33,17 @@ let app = {
     debugData(value) {
       this.readZData(value);
     },
+  },
+  beforeMount() {
+    this.initApp();
+  },
+  mounted() {
+    console.log("app mounted");
+    setTimeout(this.showApp);
+    this.updateIcons();
+  },
+  updated() {
+    this.updateIcons();
   },
   methods: {
     showApp() {
@@ -55,7 +65,7 @@ let app = {
       return base64Encoded + padding;
     },
     base64tobase64URL(str) {
-      return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/[=]+$/, "");
     },
     decodeData(str) {
       return LZString.decompressFromBase64(
@@ -71,7 +81,7 @@ let app = {
     shuffle(array) {
       let currentIndex = array.length;
       while (currentIndex != 0) {
-        let randomIndex = Math.floor(Math.random() * currentIndex);
+        const randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
         [array[currentIndex], array[randomIndex]] = [
           array[randomIndex],
@@ -154,20 +164,8 @@ let app = {
       });
     },
   },
-  beforeMount: function () {
-    this.initApp();
-  },
-  mounted: function () {
-    console.log("app mounted");
-    setTimeout(this.showApp);
-    this.updateIcons();
-  },
-  updated: function () {
-    this.updateIcons();
-  },
-};
+});
 
 window.onload = () => {
-  app = Vue.createApp(app);
   app.mount("#app");
 };
