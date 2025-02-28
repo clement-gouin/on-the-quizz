@@ -20,7 +20,6 @@ export default [
     rules: {
       "no-magic-numbers": "off",
       "sort-keys": "off",
-      "no-warning-comments": "off",
       "no-ternary": "off",
       "one-var": "off",
       "max-statements": ["warn", 50],

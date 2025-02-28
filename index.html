@@ -22,21 +22,21 @@
       <div v-if="debug">
         <h1><i icon="notebook-pen"></i> On The Quizz</h1>
         <textarea v-model="debugData" rows="10"></textarea><br />
-        <a v-if="debugData.length" :href="debugUrl" target="_blank"
+        <a v-if="debugUrl" :href="debugUrl" target="_blank"
           ><i icon="link"></i> Output link</a
         >
         <br />
         <br />
         <hr />
       </div>
-      <div class="header" v-html="header"></div>
+      <div class="header" v-html="parsed.header"></div>
       <form @submit.prevent="submit">
-        <template v-for="question, i in questions">
+        <template v-for="question, i in parsed.questions">
           <label :for="`input-${i}`" v-html="question.label"></label><br />
           <input
             type="text"
             v-if="question.answers.length == 1"
-            v-model.lazy="question.value"
+            v-model.lazy="answers[i]"
             :id="`input-${i}`"
             :name="`input-${i}`"
             :disabled="readonly"
@@ -48,7 +48,7 @@
           >
             <input
               type="radio"
-              v-model="question.value"
+              v-model="answers[i]"
               :id="`input-${i}-${j}`"
               :name="`input-${i}`"
               :value="answer"
@@ -60,7 +60,7 @@
           </template>
           <select
             v-if="question.answers.length > 4"
-            v-model="question.value"
+            v-model="answers[i]"
             :id="`input-${i}`"
             :name="`input-${i}`"
             :disabled="readonly"
@@ -80,19 +80,19 @@
         <button
           type="submit"
           :disabled="readonly || debug"
-          v-html="submitText"
+          v-html="parsed.submitText"
         ></button>
       </form>
       <template v-if="readonly || debug">
         <div
           class="green-800"
           v-if="debug || success"
-          v-html="successText"
+          v-html="parsed.successText"
         ></div>
         <template v-if="debug || !success">
-          <div class="red-800" v-html="failureText"></div>
+          <div class="red-800" v-html="parsed.failureText"></div>
           <br />
-          <button @click="retry" v-html="retryText"></button>
+          <button @click="retry" v-html="parsed.retryText"></button>
         </template>
       </template>
     </main>
