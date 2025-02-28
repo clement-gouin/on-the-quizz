@@ -1,9 +1,9 @@
-# On The Quizz
+# [Z] On The Quizz
 *When you need quizzes on the go !*
 
 > Part of the [Z-Apps](https://github.com/clement-gouin/z-app)
 
-### [Tool link](https://clement-gouin.github.io/on-the-quizz/)
+### [Tool link](https://clement-gouin.github.io/z-on-the-quizz/)
 
 ## Data format
 
