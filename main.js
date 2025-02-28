@@ -17,7 +17,9 @@ const DEFAULT_VALUES = {
   header: "",
   successText: "",
   failureText: "",
+  hasSubmitText: true,
   submitText: "<i icon='send'></i> Submit",
+  hasRetryText: true,
   retryText: "<i icon='rotate-ccw'></i> Retry",
   questions: [],
 };
@@ -146,28 +148,55 @@ const app = createApp({
         : "";
     },
     updateEditor(value) {
-      // TODO
       const debugDataSplit = value.split("\n");
-      let size = HELP_HEADER.length + HELP_PART.length;
+      const headerSize =
+        HELP_HEADER.length -
+        (this.parsed.hasSubmitText ? 0 : 1) -
+        (this.parsed.hasRetryText ? 0 : 1);
+      let size = headerSize + HELP_PART.length;
+      if (this.parsed.questions.length) {
+        size = this.parsed.questions.reduce(
+          (sum, question) => sum + question.size + 2,
+          headerSize
+        );
+      }
       while (debugDataSplit.length > size) {
         size += HELP_PART.length;
       }
       const lines = Array(size).fill(0);
+      let currentQestionIndex = 0;
+      let questionStartIndex = headerSize;
       this.editor.numbersText = debugDataSplit
         .map((_value, index) => `${index + 1}.`)
         .join("\n");
       this.editor.overlayText = lines
         .map((_value, index) => {
           if (
+            headerSize <= index &&
+            this.parsed.questions.length > currentQestionIndex &&
+            index >
+              questionStartIndex +
+                this.parsed.questions[currentQestionIndex].size +
+                1 &&
+            (debugDataSplit.length <= index ||
+              debugDataSplit[index].trim().length === 0 ||
+              /^\d+$/u.test(debugDataSplit[index]))
+          ) {
+            currentQestionIndex += 1;
+            questionStartIndex = index;
+          }
+          if (
             debugDataSplit.length > index &&
             debugDataSplit[index].trim().length
           ) {
             return " ".repeat(debugDataSplit[index].length);
           }
-          if (HELP_HEADER.length > index) {
+          if (headerSize > index) {
             return HELP_HEADER[index];
           }
-          return HELP_PART[(index - HELP_HEADER.length) % HELP_PART.length];
+          return HELP_PART[
+            Math.min(HELP_PART.length - 1, index - questionStartIndex)
+          ];
         })
         .join("\n");
       this.editor.numbersCols = lines.length.toString().length + 1;
@@ -199,9 +228,13 @@ const app = createApp({
       }
       if (parts.length && !/^\d+$/u.test(parts[0])) {
         this.parsed.submitText = parts.shift();
+      } else {
+        this.parsed.hasSubmitText = !parts.length || !parts[0].length;
       }
       if (parts.length && !/^\d+$/u.test(parts[0])) {
         this.parsed.retryText = parts.shift();
+      } else {
+        this.parsed.hasRetryText = !parts.length || !parts[0].length;
       }
       while (parts.length) {
         const line = parts.shift();
@@ -209,6 +242,7 @@ const app = createApp({
           let size = parseInt(line, 10);
           const currentQuestion = {
             label: parts.shift(),
+            size,
             answers: [],
             expected: null,
           };
